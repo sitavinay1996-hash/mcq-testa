@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MCQ Test (20 Questions)</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .option {
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #333;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        .correct {
+            background-color: #b6fcb6;
+        }
+        .wrong {
+            background-color: #ffb6b6;
+        }
+        #nextBtn {
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2 id="question"></h2>
+<div id="options"></div>
+
+<button id="nextBtn" onclick="nextQuestion()">Next</button>
+<h3 id="score"></h3>
+
+<script>
+const questions = [
+    {q:"1. Capital of India?", o:["Mumbai","New Delhi","Kolkata","Chennai"], a:1},
+    {q:"2. Father of Indian Constitution?", o:["Gandhi","Nehru","Ambedkar","Patel"], a:2},
+    {q:"3. Largest planet?", o:["Earth","Mars","Jupiter","Venus"], a:2},
+    {q:"4. 2 + 2 = ?", o:["3","4","5","6"], a:1},
+    {q:"5. National animal of India?", o:["Lion","Tiger","Elephant","Leopard"], a:1},
+    {q:"6. Sun rises in?", o:["West","North","East","South"], a:2},
+    {q:"7. Smallest prime number?", o:["0","1","2","3"], a:2},
+    {q:"8. Currency of India?", o:["Dollar","Rupee","Yen","Euro"], a:1},
+    {q:"9. Who wrote Ramayana?", o:["Valmiki","Tulsidas","Ved Vyas","Kalidas"], a:0},
+    {q:"10. Largest ocean?", o:["Indian","Atlantic","Pacific","Arctic"], a:2},
+    {q:"11. H2O is?", o:["Hydrogen","Oxygen","Water","Salt"], a:2},
+    {q:"12. 10 × 10 = ?", o:["100","10","20","1000"], a:0},
+    {q:"13. National bird of India?", o:["Crow","Sparrow","Peacock","Eagle"], a:2},
+    {q:"14. Which is a verb?", o:["Run","Blue","Table","Happy"], a:0},
+    {q:"15. Largest desert?", o:["Sahara","Gobi","Thar","Kalahari"], a:0},
+    {q:"16. 1 km = ?", o:["100 m","500 m","1000 m","1500 m"], a:2},
+    {q:"17. Who discovered gravity?", o:["Newton","Einstein","Edison","Tesla"], a:0},
+    {q:"18. Hindi day celebrated on?", o:["14 Sept","26 Jan","15 Aug","2 Oct"], a:0},
+    {q:"19. Which is a vowel?", o:["B","C","A","D"], a:2},
+    {q:"20. Largest bone in body?", o:["Skull","Femur","Rib","Hand"], a:1}
+];
+
+let index = 0;
+let score = 0;
+
+function loadQuestion() {
+    document.getElementById("question").innerHTML = questions[index].q;
+    let optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    questions[index].o.forEach((opt, i) => {
+        let div = document.createElement("div");
+        div.className = "option";
+        div.innerHTML = opt;
+        div.onclick = () => checkAnswer(div, i);
+        optionsDiv.appendChild(div);
+    });
+}
+
+function checkAnswer(element, selected) {
+    let options = document.getElementsByClassName("option");
+    for (let opt of options) opt.onclick = null;
+
+    if (selected === questions[index].a) {
+        element.classList.add("correct");
+        score++;
+    } else {
+        element.classList.add("wrong");
+        options[questions[index].a].classList.add("correct");
+    }
+}
+
+function nextQuestion() {
+    index++;
+    if (index < questions.length) {
+        loadQuestion();
+    } else {
+        document.body.innerHTML =
+            "<h2>Test Completed</h2><h3>Your Score: " + score + "/20</h3>";
+    }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
